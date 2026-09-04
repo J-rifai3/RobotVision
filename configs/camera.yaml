@@ -1,0 +1,18 @@
+# Camera intrinsics & depth settings
+# Paste your calibrated values here.
+
+width: 640
+height: 480
+
+intrinsics:
+  fx: 0.0   # ← paste
+  fy: 0.0
+  cx: 0.0
+  cy: 0.0
+
+# Depth unit: "mm_uint16" | "meters_float"
+depth_format: mm_uint16
+depth_scale: 1000.0  # divide raw depth by this to get meters (if uint16 mm)
+
+# Optional distortion (k1, k2, p1, p2, k3) — leave null if rectified
+distortion: null

@@ -1,0 +1,26 @@
+# Grounded SAM 2 settings
+# Paste checkpoint paths and hyperparams from your existing setup.
+
+extends: camera.yaml
+
+grounding_model:
+  type: grounding_dino  # or florence2, dinox, etc.
+  config_path: ""       # ← paste path to Grounding DINO config
+  checkpoint_path: ""   # ← paste path to weights
+
+sam2:
+  config_path: ""       # ← paste SAM 2 model config
+  checkpoint_path: ""   # ← paste SAM 2 weights
+
+detection:
+  box_threshold: 0.25
+  text_threshold: 0.25
+  max_detections: 5
+
+segmentation:
+  multimask_output: false
+
+# Default text prompt (override via CLI --prompt)
+default_prompt: "object"
+
+output_dir: data/masks

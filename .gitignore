@@ -1,0 +1,40 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Data & artifacts (keep structure via .gitkeep)
+data/rgbd/**/*
+!data/rgbd/.gitkeep
+data/masks/**/*
+!data/masks/.gitkeep
+data/meshes/**/*
+!data/meshes/.gitkeep
+data/outputs/**/*
+!data/outputs/.gitkeep
+
+# Weights & large upstream checkouts (track via submodule or manual)
+external/FoundationPose/**/*
+!external/FoundationPose/.gitkeep
+external/GroundedSAM2/**/*
+!external/GroundedSAM2/.gitkeep
+weights/
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# OS
+.DS_Store
+Thumbs.db

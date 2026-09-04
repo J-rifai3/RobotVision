@@ -1,0 +1,19 @@
+# Full pipeline: Grounded SAM 2 → FoundationPose
+# Paste combo-model settings from your existing integration.
+
+extends: camera.yaml
+
+prompt: "red mug"       # ← open-vocabulary target
+
+grounded_sam2: configs/grounded_sam2.yaml
+foundation_pose: configs/foundation_pose.yaml
+
+mesh_path: data/meshes/object.obj
+rgbd_dir: data/rgbd/demo
+output_dir: data/outputs
+
+# Optional temporal smoothing (paste your filter params)
+temporal_filter:
+  enabled: false
+  window_size: 5
+  position_threshold_m: 0.02

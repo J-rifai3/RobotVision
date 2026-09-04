@@ -1,0 +1,18 @@
+# FoundationPose settings
+# Paste paths from your existing FoundationPose run scripts.
+
+extends: camera.yaml
+
+mesh_path: data/meshes/object.obj  # ← paste your mesh
+
+foundation_pose:
+  repo_root: external/FoundationPose
+  checkpoint_dir: ""    # ← paste weights directory
+  refine_iterations: 5
+  track_mode: true      # register first frame, then track
+
+# Input: directory with color.png + depth.png per frame
+rgbd_dir: data/rgbd/demo
+mask_path: data/masks/frame_000000.png  # or per-frame mask dir
+
+output_dir: data/outputs

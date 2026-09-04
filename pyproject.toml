@@ -1,0 +1,32 @@
+[project]
+name = "robotvision"
+version = "0.1.0"
+description = "Grounded SAM 2 + FoundationPose perception stack for robotics"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "opencv-python-headless>=4.8",
+    "pyyaml>=6.0",
+    "tqdm>=4.66",
+    "tyro>=0.8",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4", "ruff>=0.4"]
+
+[project.scripts]
+rv-segment = "robotvision.cli:segment_main"
+rv-pose = "robotvision.cli:pose_main"
+rv-pipeline = "robotvision.cli:pipeline_main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
