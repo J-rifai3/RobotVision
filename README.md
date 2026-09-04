@@ -2,8 +2,6 @@
 
 Unified workspace for robot perception experiments: **Grounded SAM 2** (open-vocabulary segmentation) + **FoundationPose** (6D pose), plus the Boxer/BEV/SLAM stack.
 
-Previously this lived in several sibling folders under `Documents/`; everything useful is now here.
-
 ## Layout
 
 ```
@@ -69,14 +67,3 @@ rv-pipeline --help
 | `external/zed_object_pipeline` | BoxerNet OBB + BEV + SLAM desktop pipeline |
 
 Details and install notes: [`external/README.md`](external/README.md).
-
-## Migrated from
-
-| Old path | New home |
-|----------|----------|
-| `Documents/SAM+Foundation` | `apps/candle` + `external/{FoundationPose,GroundedSAM2}` |
-| `Documents/FoundationPoseTest` | `apps/cube` |
-| `Documents/FoundationPose` | `external/FoundationPose` (+ demos under `data/demos/`) |
-| `Documents/GroundSAM2` | `external/GroundedSAM2` |
-| `Documents/ExistingModel/zed_object_pipeline` | `external/zed_object_pipeline` |
-| `Documents/ZED` | `data/svo/` |
