@@ -1,26 +1,27 @@
 # Grounded SAM 2 settings
-# Paste checkpoint paths and hyperparams from your existing setup.
 
 extends: camera.yaml
 
 grounding_model:
-  type: grounding_dino  # or florence2, dinox, etc.
-  config_path: ""       # ← paste path to Grounding DINO config
-  checkpoint_path: ""   # ← paste path to weights
+  type: grounding_dino
+  # HuggingFace id used by the candle/cube apps (local gdino weights optional)
+  config_path: ""
+  checkpoint_path: ""
+  hf_model: IDEA-Research/grounding-dino-tiny
 
 sam2:
-  config_path: ""       # ← paste SAM 2 model config
-  checkpoint_path: ""   # ← paste SAM 2 weights
+  config_path: configs/sam2.1/sam2.1_hiera_t.yaml
+  checkpoint_path: external/GroundedSAM2/checkpoints/sam2.1_hiera_tiny.pt
+  repo_root: external/GroundedSAM2
 
 detection:
-  box_threshold: 0.25
-  text_threshold: 0.25
+  box_threshold: 0.28
+  text_threshold: 0.20
   max_detections: 5
 
 segmentation:
   multimask_output: false
 
-# Default text prompt (override via CLI --prompt)
 default_prompt: "object"
 
 output_dir: data/masks

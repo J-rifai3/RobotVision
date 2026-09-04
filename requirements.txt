@@ -5,10 +5,6 @@ pyyaml>=6.0
 tqdm>=4.66
 tyro>=0.8
 
-# --- Paste / merge deps from your existing envs below ---
-# torch
-# torchvision
-# groundingdino
-# segment-anything-2
-# trimesh
-# open3d
+# Full GPU stack is installed by apps/candle/setup.sh into the candle-scan conda env:
+#   torch / torchvision, open3d, trimesh, transformers, Grounded-SAM-2, FoundationPose, …
+# See apps/candle/environment.yml

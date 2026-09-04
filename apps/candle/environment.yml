@@ -1,0 +1,37 @@
+# Unified conda environment for Grounded-SAM-2 + FoundationPose + ZED.
+#
+# After creating the env, run ./setup.sh to install PyTorch, clone repos,
+# build extensions, and download model weights.
+name: candle-scan
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - cmake
+  - ninja
+  - eigen
+  - boost-cpp
+  - pybind11
+  - cxx-compiler
+  - pip:
+      - ninja
+      - opencv-python
+      - imageio
+      - open3d
+      - trimesh
+      - scipy
+      - pyyaml
+      - tqdm
+      - supervision
+      - pycocotools
+      - transformers
+      - huggingface_hub
+      - pillow
+      - einops
+      - hydra-core
+      - iopath
+      - scikit-image
+      - joblib
+      - ruamel.yaml

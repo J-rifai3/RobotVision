@@ -1,0 +1,96 @@
+# Paths relative to apps/cube/, or absolute.
+paths:
+  # Candle app lives next door; scan_cube imports scan_candle from there
+  sam_foundation_dir: ../candle
+  grounded_sam2_dir: ../../external/GroundedSAM2
+  foundationpose_dir: ../../external/FoundationPose
+  sam2_checkpoint: ../../external/GroundedSAM2/checkpoints/sam2.1_hiera_tiny.pt
+  sam2_config: configs/sam2.1/sam2.1_hiera_t.yaml
+  fp_weights_dir: ../../external/FoundationPose/weights
+  work_dir: .
+  mesh_file: mesh/cube.obj
+
+# Put your SolidWorks export here first (STL or OBJ), then run prepare_mesh.py
+mesh:
+  # Path to the raw export from SolidWorks (STL preferred)
+  source_file: mesh/cube_raw.stl
+  # SolidWorks often exports millimeters. Set to 0.001 for mm → meters.
+  scale: 0.001
+  # Optional: force edge length in meters after scaling (null = keep CAD size)
+  # Example: 0.05 for a 5 cm cube. Leave null if CAD matches the physical cube.
+  force_edge_m: null
+
+# Grounded-SAM-2
+segmentation:
+  text_prompt: "cube."
+  fallback_prompts:
+    - "gray cube."
+    - "small cube."
+    - "block."
+  grounding_model: IDEA-Research/grounding-dino-tiny
+  grounding_device: cpu
+  box_threshold: 0.28
+  text_threshold: 0.20
+  min_box_threshold: 0.15
+  min_text_threshold: 0.12
+  # Prefer detection nearest image center (avoids power strips / clutter).
+  # Options: center | center_score | largest
+  pick_mode: center
+  # Ignore tiny noise and huge distractors (fraction of image area)
+  min_area_frac: 0.0008
+  max_area_frac: 0.20
+  center_weight: 3.0
+  # Cube register uses a yellow center box + SAM2 only (no Grounding DINO).
+  # Put the cube in the box, SPACE to mask, SPACE again to lock. r re-registers.
+  show_mask: true
+  confirm_mask: true
+  center_box_frac: 0.35
+
+# ZED camera
+zed:
+  resolution: VGA
+  # PERFORMANCE is much faster than NEURAL; QUALITY is a middle ground.
+  depth_mode: PERFORMANCE
+  depth_minimum_distance: 0.1
+  depth_maximum_distance: 3.0
+
+# Unused by CAD workflow (CandleScanner may still read these keys)
+reconstruction:
+  mode: fast
+  num_reference_views: 1
+  fast_num_reference_views: 1
+  reference_capture_interval_s: 2.0
+  mesh_resolution: 0.003
+
+# FoundationPose — tuned for tracking FPS on 8 GB GPU
+foundationpose:
+  # Register (first frame / after redraw). Lower = faster, slightly less accurate.
+  est_refine_iter: 2
+  # Track (every later frame). 1 is usually enough and much faster.
+  track_refine_iter: 1
+  render_batch_size: 32
+  warp_chunk: 16
+  # Only affects register (hypothesis grid), not tracking.
+  rotation_views: 8
+  inplane_step: 90
+  # 0 = no FP debug overlays/extra writes (faster)
+  debug: 0
+  debug_dir: debug
+  # How often to log / save track frames (1 = every frame, 15 ≈ every ~0.5s)
+  log_every: 15
+  save_every: 30
+
+# GPU memory (8 GB)
+memory:
+  exclusive_gpu_models: true
+  lazy_load_segmentation: true
+  unload_segmentation_during_pose: true
+  grounding_on_cpu: true
+
+# Accuracy evaluation
+accuracy:
+  # Cubes have 24-fold rotational symmetry; report the best-matching orientation.
+  handle_cube_symmetry: true
+  # Optional known ground-truth pose as a 4x4 matrix text file (camera frame).
+  # Leave empty to only log estimated pose (no error metrics).
+  gt_pose_file: gt/ob_in_cam.txt

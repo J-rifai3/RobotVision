@@ -22,18 +22,38 @@ data/meshes/**/*
 !data/meshes/.gitkeep
 data/outputs/**/*
 !data/outputs/.gitkeep
+data/svo/**/*
+!data/svo/.gitkeep
+data/workspaces/**/*
+!data/workspaces/.gitkeep
+data/demos/**/*
+!data/demos/.gitkeep
 
-# Weights & large upstream checkouts (track via submodule or manual)
-external/FoundationPose/**/*
-!external/FoundationPose/.gitkeep
-external/GroundedSAM2/**/*
-!external/GroundedSAM2/.gitkeep
+# App-local debug / captures
+apps/**/debug/
+apps/**/captures/
+apps/cube/gt/**/*
+!apps/cube/gt/README.txt
+apps/cube/mesh/**/*
+!apps/cube/mesh/README.txt
+
+# Weights & large upstream checkouts (track via submodule or keep local)
+external/FoundationPose/
+external/GroundedSAM2/
+external/zed_object_pipeline/
+!external/README.md
 weights/
 checkpoints/
 *.pt
 *.pth
 *.ckpt
 *.onnx
+*.svo2
+*.zip
+*.run
+
+# Vendor wheels
+vendor/
 
 # OS
 .DS_Store

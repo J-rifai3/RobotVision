@@ -1,0 +1,60 @@
+# Paths are relative to apps/candle/ (this file's directory).
+paths:
+  grounded_sam2_dir: ../../external/GroundedSAM2
+  foundationpose_dir: ../../external/FoundationPose
+  sam2_checkpoint: ../../external/GroundedSAM2/checkpoints/sam2.1_hiera_tiny.pt
+  sam2_config: configs/sam2.1/sam2.1_hiera_t.yaml
+  fp_weights_dir: ../../external/FoundationPose/weights
+  work_dir: ../../data/workspaces/candle
+
+# Grounded-SAM-2 text detection
+segmentation:
+  text_prompt: "candle."
+  # Tried in order when the primary prompt finds nothing
+  fallback_prompts:
+    - "wax candle."
+    - "candle stick."
+    - "lit candle."
+    - "taper candle."
+  grounding_model: IDEA-Research/grounding-dino-tiny
+  # cpu = saves ~1 GB VRAM; sam2 stays on GPU
+  grounding_device: cpu
+  box_threshold: 0.28
+  text_threshold: 0.20
+  # Retried with progressively lower values if still no detections
+  min_box_threshold: 0.15
+  min_text_threshold: 0.12
+
+# ZED camera
+zed:
+  resolution: VGA             # lower res saves VRAM during FoundationPose warps
+  depth_mode: NEURAL         # NONE | PERFORMANCE | QUALITY | ULTRA | NEURAL
+  depth_minimum_distance: 0.1
+  depth_maximum_distance: 3.0
+
+# Model-free object reconstruction
+reconstruction:
+  mode: fast                 # fast = single-view depth mesh | neural = BundleSDF NeRF (slower, better)
+  num_reference_views: 8     # used in neural mode (rotate candle in place between shots)
+  fast_num_reference_views: 1
+  reference_capture_interval_s: 2.0
+  mesh_resolution: 0.003     # meters, used by neural mode
+
+# FoundationPose
+foundationpose:
+  est_refine_iter: 2
+  track_refine_iter: 1
+  render_batch_size: 16
+  warp_chunk: 8
+  rotation_views: 10
+  inplane_step: 90
+  debug: 0
+  debug_dir: ../../data/workspaces/candle/debug
+
+# GPU memory (RTX 3070 Laptop / 8 GB)
+memory:
+  # Never keep Grounded-SAM-2 and FoundationPose on GPU at the same time
+  exclusive_gpu_models: true
+  lazy_load_segmentation: true
+  unload_segmentation_during_pose: true
+  grounding_on_cpu: true
